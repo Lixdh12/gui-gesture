@@ -1,7 +1,7 @@
-# Interfaz de reconocimiento de patrones gestuales
-Ejecutar el archivo main.py
+# Gesture pattern recognition interface
+Run main.py
 
-## Archivos
+## Files
 - main.py
 - FrameCapturaImagenes.py
 - PalmTracker.py
@@ -12,7 +12,7 @@ Ejecutar el archivo main.py
 - FramePredictor.py
 - ContinousGesturePredictor.py
 
-## Paquetes y sus versiones usadas en el proyecto
+## Versions
 - Jinja2	2.11.2	
 - Markdown	3.2.1	
 - MarkupSafe	1.1.1
