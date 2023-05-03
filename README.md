@@ -1,6 +1,8 @@
 # Sistema de patrones gestuales con redes neuronales artificiales
 System of gestural patterns with artificial neural networks
 
+Este sistema captura gestos para posteriormente etiquetarlos en sus respectivas clases o categorías. Cada gesto tiene un conjunto de imágenes, estos serán entenados en un modelo de red neuronal artificial. El modelo recibe conjuntos de entrenmiento y validación, finalmente predice los gestos que están ante la cámara web.
+
 Run main.py
 
 ## Files
