@@ -18,10 +18,14 @@ class ModelTrainer:
  #   testImages = []
 #    testLabels = []
 
-    def __init__(self, list_dat, name, path_s, f_window):
+    def __init__(self, list_dat, name, e_img, v_img, w_img, h_img,  path_s, f_window):
         self.father_window = f_window
         self.list_data = list_dat
         self.name_model = name
+        self.fit_img = e_img
+        self.val_img = v_img
+        self.w = w_img
+        self.h = h_img
         self.path_save = path_s
 
         #Crear la ventana
@@ -50,14 +54,20 @@ class ModelTrainer:
                 #Obtener de cada item el valor que contiene la ruta
                 path = item[1] # item(nombre_de_gesto, ruta_de_gesto, ruta_test)
                 #carga de las imagenes desde la ruta de cada item
-                for i in range(0, 1000):
+                for i in range(0, self.fit_img):
                     # Actualizar ventana hija
                     self.child_window.update_idletasks()
                     self.child_window.update()
                    #Obtener las imagenes
                     image = cv2.imread(path+'\\gest_' + str(i) + '.png')
+
+                    #Obtener dimensiones de la imagen height, weigth, channel.
+                    #Solo en este método se obtendrá, en los demás se usará el mismo valor,
+                    #ya que, para la red se tendrán que usar imagenes de las mismas dimensiones
+                    #self.h, self.w, chan = image.shape
+
                     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-                    self.loadedImages.append(gray_image.reshape(89, 100, 1))
+                    self.loadedImages.append(gray_image.reshape(self.h, self.w, 1))
 
         except Exception:
             e = sys.exc_info()[1]
@@ -82,7 +92,7 @@ class ModelTrainer:
             n[i] = 1
             #Copiar la lista a una nueva variable
             new_list = n.copy()
-            for j in range(0, 1000):
+            for j in range(0, self.fit_img):
                 # Actualizar ventana hija
                 self.child_window.update_idletasks()
                 self.child_window.update()
@@ -98,14 +108,19 @@ class ModelTrainer:
             # Obtener de cada item el valor que contiene la ruta
             path_test = item[2]  # item(nombre_de_gesto, ruta_de_gesto, ruta_test)
             # carga de las imagenes desde la ruta de cada item
-            for i in range(0, 100):
+            for i in range(0, self.val_img):
                 #Actualizar ventana hija
                 self.child_window.update_idletasks()
                 self.child_window.update()
 
                 image = cv2.imread(path_test + '\\gest_' + str(i) + '.png')
+
+                # Obtener las dimensiones de las imagenes
+                #self.h, self.w, chan = image.shape
+                #print(h, w)
+
                 gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-                self.testImages.append(gray_image.reshape(89, 100, 1))
+                self.testImages.append(gray_image.reshape(self.h, self.w, 1))
 
 
         self.testLabels = []
@@ -125,7 +140,7 @@ class ModelTrainer:
             n[i] = 1
             #Crear una copia de la lista
             new_list = n.copy()
-            for j in range(0, 100):
+            for j in range(0, self.val_img):
                 # Actualizar ventana hija
                 self.child_window.update_idletasks()
                 self.child_window.update()
@@ -141,7 +156,7 @@ class ModelTrainer:
         self.child_window.update()
         self.name_optimizer = 'adam'
         tf.reset_default_graph()
-        convnet = input_data(shape=[None, 89, 100, 1], name='input')
+        convnet = input_data(shape=[None, self.h, self.w, 1], name='input')
         convnet = conv_2d(convnet, 32, 2, activation='relu')
         convnet = max_pool_2d(convnet, 2)
         convnet = conv_2d(convnet, 64, 2, activation='relu')
@@ -162,7 +177,7 @@ class ModelTrainer:
         convnet = conv_2d(convnet, 64, 2, activation='relu')
         convnet = max_pool_2d(convnet, 2)
 
-        convnet = fully_connected(convnet, 1000, activation='relu')
+        convnet = fully_connected(convnet, self.fit_img, activation='relu')
         convnet = dropout(convnet, 0.75)
 
         convnet = fully_connected(convnet, self.length_data, activation='softmax')
@@ -179,7 +194,7 @@ class ModelTrainer:
 
         #Calcular el numero de iteraciones para el entrenamiento, la longitud de los datos por numero de unidades
         # en la capa fully_connected (int), por default 1000
-        num_iter = self.length_data * 1000
+        num_iter = self.length_data * self.fit_img
         num_epoch = 50
 
         try:

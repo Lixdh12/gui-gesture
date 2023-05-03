@@ -66,9 +66,7 @@ class ProgressCallback(tf.callbacks.Callback):
         self.text_area.insert(tk.END, "\n\t Validation Accuracy: %.4f - Validation Loss: %.4f"
                               % (training_state.val_acc or 0.0, training_state.val_loss or 0.0))
 
-        #Insertar valores globales: mejor precision, precisión y pérdida
-        #self.text_area.insert(tk.END, "\n\t Best Accuracy: %.4f - Global Accuaracy %.4f- Global Loss: %.4f"
-        #                      % (training_state.best_accuracy or 0.0, training_state.global_acc or 0.0, training_state.global_loss or 0.0))
+
 
         # Ver ultima linea insertada en el textArea
         self.text_area.see(tk.END)
@@ -80,6 +78,10 @@ class ProgressCallback(tf.callbacks.Callback):
 
         #Detener el progressbar
         self.stop_bar()
+        # Insertar valores globales: mejor precision, precisión y pérdida
+        self.text_area.insert(tk.END, "\n\t Best Accuracy: %.4f - Global Accuaracy %.4f- Global Loss: %.4f"
+                              % (training_state.best_accuracy or 0.0, training_state.global_acc or 0.0,
+                                training_state.global_loss or 0.0))
         #Actualizar label
         self.var.set('Entrenamiento finalizado!')
         #Insertar mensaje de que ha terminado el entrenamiento
@@ -87,6 +89,8 @@ class ProgressCallback(tf.callbacks.Callback):
                                          "han creado correctamente. ===")
         # Ver ultima linea insertada en el textArea
         self.text_area.see(tk.END)
+        #Cambiar valor de botón
+        self.button_string.set("Cerrar")
 
     def create_window(self):
         # Crear ventana hija para mostrar el progreso de la redimensión
@@ -111,6 +115,9 @@ class ProgressCallback(tf.callbacks.Callback):
         self.bar.pack()
         self.bar['value'] = 0
         self.bar['maximum'] = self.epochs
+        # Variables para asociar con al botón, ya que se estará cambiando su contenido
+        self.button_string = tk.StringVar()
+        self.button_string.set("Cancelar")
 
         #Agregar scrolledText para mostrar las epocas del entrenamiento
         self.text_area = sc.ScrolledText(self.child_window, width=100, height=12,
@@ -120,7 +127,7 @@ class ProgressCallback(tf.callbacks.Callback):
         #self.text_area.config(state="disabled")
 
         # Agregar botón para cancelar la redimensión
-        self.button_cancel = tk.Button(self.child_window, text="Cancelar", command=self.cancel)
+        self.button_cancel = tk.Button(self.child_window, textvariable=self.button_string, command=self.cancel)
         self.button_cancel.config(font=("Arial", 10, "bold"))
         self.button_cancel.pack(pady=10)
 
