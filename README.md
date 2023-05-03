@@ -1,4 +1,5 @@
-# Gesture pattern recognition interface
+# Sistema de patrones gestuales con redes neuronales artificiales
+System of gestural patterns with artificial neural networks
 Run main.py
 
 ## Files
