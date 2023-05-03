@@ -7,11 +7,11 @@ import sys, time
 class ResizeImages:
     basewidth = 100
 
-    def __init__(self,carpeta, pixW, pixH, numC, f_window):
+    def __init__(self,carpeta, pixW, pixH, num_imgs, f_window):
         self.directorio = carpeta
         self.pixel_width = pixW
         self.pixel_heigth = pixH
-        self.num_capture = numC
+        self.num_img = num_imgs
         self.father_window = f_window
 
         #Crear ventana hija para mostrar el progreso de la redimensión
@@ -63,14 +63,15 @@ class ResizeImages:
     def main(self):
         value = 0
         try:
-            for i in range(0, self.num_capture):
+            for i in range(0, self.num_img):
                 #Calcular el valor del proceso basado en un 100%
-                value = (i*100)/self.num_capture
+                value = (i*100)/self.num_img
                 #Mostrar el porcentaje en el progressbar
                 self.bar.after(500,self.progress(value))
                 self.bar.update()
                 #Redimensionar las imagenes
                 self.configurarImagen(self.directorio+"\\gest_" + str(i) + '.png')
+
             #Destruir la ventana
             self.child_window.destroy()
             #Cuando la redimensión termine y termine exitosamente, se mostrará un mensaje

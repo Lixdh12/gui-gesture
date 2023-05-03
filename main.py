@@ -2,6 +2,7 @@ import FrameCapturaImagenes as captura
 import FrameRedimensionarImagenes as redimensionar
 import FrameEntrenamientoRed as entrenamiento
 import FramePredictor as reconocimiento
+#import ProgressCallback as pc
 import ResizeImages as resize
 import tkinter as tk
 from tkinter import ttk
@@ -25,8 +26,8 @@ class Sistema:
 
     def centrar_ventana(self):
         #Dimensiones de la ventana
-        w = 700
-        h = 520
+        w = 800
+        h = 620
         #Determinar la anchira y longitud de la pantalla
         sw = self.ventana_principal.winfo_screenwidth()
         sh = self.ventana_principal.winfo_screenheight()
@@ -56,7 +57,7 @@ class Sistema:
         #Pestaña para la sección del Inicio del Reconocimiento
         tab_reconocimiento = ttk.Frame(tab_padre)
         #Se agrega al Nootebook
-        tab_padre.add(tab_reconocimiento, text="3. Inicio de reconocimiento")
+        tab_padre.add(tab_reconocimiento, text="3. Iniciar reconocimiento")
 
         #Se agrega el Notebook al frame principal de la ventana
         tab_padre.pack(fill="both", expand=1)
@@ -64,8 +65,10 @@ class Sistema:
         #Llamar a los otros frames que contienen los widgets para agregarlos al frame_principal
         captura.FrameCapturaImagenes(tab_captura_redimension)
         redimensionar.FrameRedimensionarImagenes(tab_captura_redimension, self.ventana_principal)
-        entrenamiento.FrameEntrenamientoRed(tab_entrenamiento)
+        entrenamiento.FrameEntrenamientoRed(tab_entrenamiento, self.ventana_principal)
         reconocimiento.FramePredictor(tab_reconocimiento)
+
+        #pc.ProgressCallback(self.ventana_principal)
 
         #Pasar ventana padre, para crear ventajas hijas
         #resize.father_window = self.ventana_principal
