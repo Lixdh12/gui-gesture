@@ -1,4 +1,5 @@
-# Gesture pattern recognition interface
+# Sistema de reconocimiento de patrones gestuales
+Gesture pattern recognition system
 Run main.py
 
 ## Files
