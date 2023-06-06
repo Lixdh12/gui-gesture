@@ -9,6 +9,8 @@ Run main.py
 
 ![Entrenamiento de la red](Images/Entrenamiento de la red.PNG)
 
+![Reconocimiento](Images/Reconocimiento.PNG)
+
 ## Files
 - main.py
 - FrameCapturaImagenes.py
