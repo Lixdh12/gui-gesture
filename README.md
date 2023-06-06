@@ -7,7 +7,7 @@ Run main.py
 
 ![Captura_de_imagenes](Images/Captura_de_imagenes.PNG)
 
-![Entrenamiento de la red](Images/Entrenamiento_de_la_red.PNG)
+![Entrenamiento de la red](Images/Entrenamiento_red.PNG)
 
 ![Reconocimiento](Images/Reconocimiento.PNG)
 
