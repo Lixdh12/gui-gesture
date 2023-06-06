@@ -4,8 +4,8 @@ System of gestural patterns with artificial neural networks
 Este sistema captura gestos para posteriormente etiquetarlos en sus respectivas clases o categorías. Cada gesto tiene un conjunto de imágenes, estos serán entenados en un modelo de red neuronal artificial. El modelo recibe conjuntos de entrenmiento y validación, finalmente predice los gestos que están ante la cámara web.
 
 Run main.py
-![Captura_de_imagenes](Images/Captura_de_imagenes.png)
-![Entrenamiento de la red](Images/Entrenamiento de la red.png)
+![Captura_de_imagenes](Images/Captura_de_imagenes.PNG)
+![Entrenamiento de la red](Images/Entrenamiento de la red.PNG)
 
 ## Files
 - main.py
